@@ -1,0 +1,63 @@
+---
+workspace:
+  base: /build
+  path: src/gitlab.digital.homeoffice.gov.uk/cop/csca-checker
+
+pipeline:
+  test:
+    image: quay.io/digitalpatterns/jdk:latest
+      environment:
+        - GRADLE_USER_HOME=~/.gradle
+      commands:
+        - ./gradlew assemble
+      when:
+        event:
+        - push
+        - tag
+
+  sonar-scanner:
+    image: quay.io/ukhomeofficedigital/sonar-scanner:v3.0.1
+    when:
+      status:
+        - failure
+        - success
+      event:
+        - push
+        - pull_request
+        - tag
+
+  build_push_to_ecr:
+    image: docker:17.09.1
+    secrets:
+      - docker_username
+      - docker_password
+      - docker_server
+      - docker_group
+      - docker_name
+    commands:
+      - docker login -u=$${DOCKER_USERNAME} -p=$${DOCKER_PASSWORD} $${DOCKER_SERVER}
+      - docker tag $${DOCKER_NAME} $${DOCKER_SERVER}/$${DOCKER_GROUP}/$${DOCKER_NAME}:latest
+      - docker push $${DOCKER_SERVER}/$${DOCKER_GROUP}/$${DOCKER_NAME}:latest
+    tags:
+      - develop
+      - ${DRONE_COMMIT_BRANCH}
+    when:
+      event: push
+
+  build_tag_push_to_ecr:
+    image: docker:17.09.1
+    secrets:
+      - docker_username
+      - docker_password
+      - docker_server
+      - docker_group
+      - docker_name
+    commands:
+      - docker login -u=$${DOCKER_USERNAME} -p=$${DOCKER_PASSWORD} $${DOCKER_SERVER}
+      - docker tag $${DOCKER_NAME} $${DOCKER_SERVER}/$${DOCKER_GROUP}/$${DOCKER_NAME}:latest
+      - docker push $${DOCKER_SERVER}/$${DOCKER_GROUP}/$${DOCKER_NAME}:latest
+    tags:
+      - latest
+      - ${DRONE_COMMIT_SHA}
+    when:
+      event: tag
