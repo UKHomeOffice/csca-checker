@@ -38,9 +38,6 @@ pipeline:
       - docker login -u=$${DOCKER_USERNAME} -p=$${DOCKER_PASSWORD} $${DOCKER_SERVER}
       - docker tag $${DOCKER_NAME} $${DOCKER_SERVER}/$${DOCKER_GROUP}/$${DOCKER_NAME}:latest
       - docker push $${DOCKER_SERVER}/$${DOCKER_GROUP}/$${DOCKER_NAME}:latest
-    tags:
-      - develop
-      - ${DRONE_COMMIT_BRANCH}
     when:
       event: push
 
@@ -56,8 +53,5 @@ pipeline:
       - docker login -u=$${DOCKER_USERNAME} -p=$${DOCKER_PASSWORD} $${DOCKER_SERVER}
       - docker tag $${DOCKER_NAME} $${DOCKER_SERVER}/$${DOCKER_GROUP}/$${DOCKER_NAME}:latest
       - docker push $${DOCKER_SERVER}/$${DOCKER_GROUP}/$${DOCKER_NAME}:latest
-    tags:
-      - latest
-      - ${DRONE_COMMIT_SHA}
     when:
       event: tag
