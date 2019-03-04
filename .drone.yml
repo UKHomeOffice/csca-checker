@@ -1,7 +1,7 @@
 ---
 workspace:
   base: /build
-  path: src/gitlab.digital.homeoffice.gov.uk/cop/csca-checker
+  path: src/github.com/ukhomeoffice/csca-checker
 
 pipeline:
   test:
