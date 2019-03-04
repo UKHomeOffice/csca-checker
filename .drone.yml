@@ -6,12 +6,12 @@ workspace:
 pipeline:
   test:
     image: quay.io/digitalpatterns/jdk:latest
-      environment:
-        - GRADLE_USER_HOME=~/.gradle
-      commands:
-        - ./gradlew assemble
-      when:
-        event:
+    environment:
+      - GRADLE_USER_HOME=~/.gradle
+    commands:
+      - ./gradlew assemble
+    when:
+      event:
         - push
         - tag
 
