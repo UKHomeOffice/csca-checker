@@ -5,7 +5,8 @@ pipeline:
     environment:
       - GRADLE_USER_HOME=.gradle
     commands:
-      - ./gradlew assemble
+      - id
+      - ./gradlew assemble --stacktrace
     when:
       event:
         - push
