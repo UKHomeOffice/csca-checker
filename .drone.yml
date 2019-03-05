@@ -1,8 +1,4 @@
 ---
-workspace:
-  base: /build
-  path: src/github.com/ukhomeoffice/csca-checker
-
 pipeline:
   test:
     image: quay.io/digitalpatterns/jdk:latest
