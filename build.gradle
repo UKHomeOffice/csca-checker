@@ -17,6 +17,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.bouncycastle:bcprov-jdk15on:1.60'
+    implementation 'org.keycloak:keycloak-spring-boot-2-adapter:4.0.0.Beta3'
+    implementation 'org.keycloak:keycloak-tomcat8-adapter:4.0.0.Beta3'
     compileOnly 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
