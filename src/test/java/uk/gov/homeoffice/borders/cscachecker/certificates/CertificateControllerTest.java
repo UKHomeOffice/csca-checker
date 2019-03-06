@@ -13,8 +13,7 @@ import java.security.cert.CertificateEncodingException;
 import java.security.cert.X509Certificate;
 
 import static org.junit.Assert.assertEquals;
-import static org.springframework.http.HttpStatus.NOT_FOUND;
-import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.HttpStatus.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -40,5 +39,12 @@ public class CertificateControllerTest {
         final ResponseEntity<String> response = restTemplate.postForEntity("/isCertificateTrusted", untrusted.getEncoded(), String.class);
 
         assertEquals(NOT_FOUND, response.getStatusCode());
+    }
+
+    @Test
+    public void shouldGetBadRequestIfNotCertificate() {
+        final ResponseEntity<String> response = restTemplate.postForEntity("/isCertificateTrusted", "NOT A CERTIFICATE".getBytes(), String.class);
+
+        assertEquals(BAD_REQUEST, response.getStatusCode());
     }
 }

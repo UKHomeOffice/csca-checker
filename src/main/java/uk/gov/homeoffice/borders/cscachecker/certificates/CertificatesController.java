@@ -1,8 +1,10 @@
 package uk.gov.homeoffice.borders.cscachecker.certificates;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.io.InputStream;
 import java.security.cert.CertificateException;
@@ -32,7 +34,15 @@ public class CertificatesController {
 
             return (X509Certificate) factory.generateCertificate(resource);
         } catch (CertificateException e) {
-            throw new RuntimeException(e);
+            throw new InvalidCertificateException(e);
+        }
+    }
+
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "Certificate must be an X509 Certificate in DER format")
+    private static class InvalidCertificateException extends RuntimeException {
+
+        InvalidCertificateException(CertificateException e) {
+            super(e);
         }
     }
 }
