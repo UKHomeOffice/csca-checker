@@ -6,6 +6,7 @@ pipeline:
       - GRADLE_USER_HOME=.gradle
     commands:
       - id
+      - ls -l
       - ./gradlew assemble --stacktrace
     when:
       event:
