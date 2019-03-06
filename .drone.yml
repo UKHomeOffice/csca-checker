@@ -1,7 +1,7 @@
 ---
 pipeline:
   test:
-    image: quay.io/digitalpatterns/jdk:latest
+    image: quay.io/ukhomeofficedigital/openjdk8:latest
     environment:
       - GRADLE_USER_HOME=.gradle
     commands:
