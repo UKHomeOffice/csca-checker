@@ -38,6 +38,8 @@ pipeline:
 
   push_to_quay:
     image: docker:17.09.1
+    environment:
+      - DOCKER_HOST=tcp://172.17.0.1:2375
     secrets:
       - docker_username
       - docker_password
@@ -53,6 +55,8 @@ pipeline:
 
   tag_push_to_quay:
     image: docker:17.09.1
+    environment:
+      - DOCKER_HOST=tcp://172.17.0.1:2375
     secrets:
       - docker_username
       - docker_password
