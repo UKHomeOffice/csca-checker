@@ -22,7 +22,21 @@ pipeline:
         - pull_request
         - tag
 
-  build_push_to_ecr:
+  build:
+    image: docker:17.09.1
+    environment:
+      - DOCKER_HOST=tcp://172.17.0.1:2375
+    secrets:
+      - docker_name
+    commands:
+      - docker build -t $${DOCKER_NAME} .
+    when:
+      event:
+        - push
+        - pull_request
+        - tag
+
+  push_to_quay:
     image: docker:17.09.1
     secrets:
       - docker_username
@@ -37,7 +51,7 @@ pipeline:
     when:
       event: push
 
-  build_tag_push_to_ecr:
+  tag_push_to_quay:
     image: docker:17.09.1
     secrets:
       - docker_username
