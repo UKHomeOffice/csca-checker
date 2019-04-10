@@ -1,11 +1,11 @@
 ---
 pipeline:
   test:
-    image: quay.io/ukhomeofficedigital/openjdk8:latest
+    image: quay.io/digitalpatterns/jdk:11
     environment:
       - GRADLE_USER_HOME=.gradle
     commands:
-      - ./gradlew test assemble --stacktrace
+      - ./gradlew test assemble
     when:
       event:
         - push
